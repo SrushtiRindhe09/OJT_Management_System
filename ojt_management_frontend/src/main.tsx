@@ -5,7 +5,7 @@ import "./index.css";
 import { AuthProvider } from "./store/AuthContext";
 
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <AuthProvider>
     <App />
   </AuthProvider>

@@ -1,4 +1,5 @@
 import React from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   GraduationCap,
@@ -8,7 +9,23 @@ import {
   Download,
   Search,
 } from "lucide-react";
+type NavItemProps = {
+  to: string;
+  icon: ReactNode;
+  label: string;
+};
 
+type NavItemActiveProps = {
+  icon: ReactNode;
+  label: string;
+};
+
+type CertificateCardProps = {
+  company: string;
+  role: string;
+  duration: string;
+  logo: string;
+};
 export default function StudentCertificates() {
   return (
     <div className="flex min-h-screen bg-[#f8f9fa] font-sans">
@@ -121,7 +138,7 @@ export default function StudentCertificates() {
 
 /* ================= COMPONENTS ================= */
 
-const NavItem = ({ to, icon, label }) => (
+const NavItem = ({ to, icon, label }: NavItemProps) => (
   <Link
     to={to}
     className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition"
@@ -131,14 +148,21 @@ const NavItem = ({ to, icon, label }) => (
   </Link>
 );
 
-const NavItemActive = ({ icon, label }) => (
+const NavItemActive = ({ icon, label }: NavItemActiveProps) => (
   <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f0f7ff] text-[#4275f1] font-medium">
     {icon}
     {label}
   </div>
 );
 
-const CertificateCard = ({ company, role, duration, logo }) => (
+
+
+const CertificateCard = ({
+  company,
+  role,
+  duration,
+  logo,
+}: CertificateCardProps) => (
   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 rounded-xl bg-white border border-gray-200 p-5">
 
     <div className="flex items-center gap-4">
