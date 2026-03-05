@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Signin() {
   const navigate = useNavigate();
@@ -9,35 +10,31 @@ function Signin() {
     password: "",
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
-  // Get registered user
-  const storedUser = JSON.parse(localStorage.getItem("user"));
+  try {
 
-  if (!storedUser) {
-    alert("No user found. Please signup first.");
-    return;
-  }
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      formData
+    );
 
-  if (
-    storedUser.email === formData.email &&
-    storedUser.password === formData.password
-  ) {
-    // Save logged-in user
-    localStorage.setItem("currentUser", JSON.stringify(storedUser));
+    const { token, user } = response.data;
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("currentUser", JSON.stringify(user));
 
     alert("Login successful!");
 
-    // Role-based redirect
-    switch (storedUser.role) {
+    switch (user.role) {
       case "student":
         navigate("/student/StudentDashboard");
         break;
@@ -53,13 +50,24 @@ const handleSubmit = (e) => {
       default:
         navigate("/");
     }
-  } else {
-    alert("Invalid credentials");
+
+  } catch (error: any) {
+
+    if (error.response) {
+      alert(error.response.data.message);
+    } else {
+      alert("Login failed");
+    }
+
+    console.error(error);
   }
 };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+
         <h2 className="text-2xl font-bold mb-6 text-center">
           Sign In
         </h2>
@@ -90,6 +98,7 @@ const handleSubmit = (e) => {
           >
             Sign In
           </button>
+
         </form>
 
         <p className="text-sm text-center mt-4">
@@ -101,6 +110,7 @@ const handleSubmit = (e) => {
             Sign Up
           </span>
         </p>
+
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Signup() {
   const navigate = useNavigate();
@@ -11,21 +12,38 @@ function Signup() {
     role: "student",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Save user in localStorage
-    localStorage.setItem("user", JSON.stringify(formData));
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        formData
+      );
 
-    alert("Signup successful!");
-    navigate("/signin");
+      console.log(response.data);
+
+      alert("Signup successful!");
+
+      navigate("/signin");
+
+    } catch (error: any) {
+
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Signup failed");
+      }
+
+      console.error(error);
+    }
   };
 
   return (
@@ -36,7 +54,7 @@ function Signup() {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          
+
           <input
             type="text"
             name="name"
