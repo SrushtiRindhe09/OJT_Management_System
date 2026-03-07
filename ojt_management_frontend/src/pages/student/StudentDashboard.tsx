@@ -21,6 +21,16 @@ import {
 } from "lucide-react";
 
 export default function StudentDashboard() {
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentUser");
+
+    navigate("/"); // redirect to homepage
+  };
+
   return (
     <div className="min-h-screen flex bg-[#f8fafc] text-[#0f172a] font-sans">
       
@@ -239,7 +249,13 @@ export default function StudentDashboard() {
 
 /* ================= REUSABLE COMPONENTS ================= */
 
-const SidebarItem = ({ icon, label, active }) => (
+type SidebarItemProps = {
+  icon: React.ReactNode;
+  label: string;
+  active?: boolean;
+};
+
+const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label, active }) => (
   <div
     className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium cursor-pointer transition ${
       active
@@ -251,15 +267,31 @@ const SidebarItem = ({ icon, label, active }) => (
     {label}
   </div>
 );
+type StatCardProps = {
+  title: string;
+  value: string;
+};
 
-const StatCard = ({ title, value }) => (
+const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
   <div className="bg-white border border-[#e2e8f0] rounded-xl p-6 shadow-sm">
     <p className="text-sm text-[#64748b]">{title}</p>
     <h3 className="text-2xl font-bold mt-1">{value}</h3>
   </div>
 );
 
-const ApplicationItem = ({ company, role, status, color }) => (
+type ApplicationItemProps = {
+  company: string;
+  role: string;
+  status: string;
+  color: string;
+};
+
+const ApplicationItem: React.FC<ApplicationItemProps> = ({
+  company,
+  role,
+  status,
+  color,
+}) => (
   <div className="flex justify-between items-center p-4">
     <div>
       <p className="font-semibold">{company}</p>
@@ -271,11 +303,19 @@ const ApplicationItem = ({ company, role, status, color }) => (
   </div>
 );
 
-const DeadlineItem = ({ icon, title, date }) => (
+type DeadlineItemProps = {
+  icon: React.ReactNode;
+  title: string;
+  date: string;
+};
+
+const DeadlineItem: React.FC<DeadlineItemProps> = ({
+  icon,
+  title,
+  date,
+}) => (
   <div className="flex items-center gap-3">
-    <div className="bg-[#eef2ff] p-2 rounded-lg text-[#4f46e5]">
-      {icon}
-    </div>
+    <div className="bg-[#eef2ff] p-2 rounded-lg text-[#4f46e5]">{icon}</div>
     <div>
       <p className="font-medium">{title}</p>
       <p className="text-sm text-[#64748b]">Due: {date}</p>
@@ -283,7 +323,12 @@ const DeadlineItem = ({ icon, title, date }) => (
   </div>
 );
 
-const QuickLink = ({ icon, label }) => (
+type QuickLinkProps = {
+  icon: React.ReactNode;
+  label: string;
+};
+
+const QuickLink: React.FC<QuickLinkProps> = ({ icon, label }) => (
   <div className="flex flex-col items-center justify-center gap-2 p-4 rounded-lg hover:bg-gray-100 cursor-pointer transition">
     <div className="text-[#4f46e5]">{icon}</div>
     <p className="text-xs font-medium text-center">{label}</p>
