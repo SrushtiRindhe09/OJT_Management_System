@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   School,
   LayoutDashboard,
@@ -93,7 +94,9 @@ export default function StudentDashboard() {
         {/* Bottom */}
         <div className="border-t border-[#e2e8f0] pt-4 space-y-1">
           <SidebarItem icon={<HelpCircle size={18} />} label="Help Center" />
-          <SidebarItem icon={<LogOut size={18} />} label="Logout" />
+          <div onClick={handleLogout}>
+  <SidebarItem icon={<LogOut size={18} />} label="Logout" />
+</div>
         </div>
       </aside>
 
