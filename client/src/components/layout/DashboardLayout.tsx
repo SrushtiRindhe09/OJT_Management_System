@@ -13,7 +13,8 @@ import {
   LayoutDashboard,
   Menu,
   X,
-  ChevronLeft
+  ChevronLeft,
+  ClipboardList
 } from 'lucide-react';
 import Navbar from './Navbar';
 
@@ -44,6 +45,7 @@ const DashboardLayout = ({ children, activeRole }: DashboardLayoutProps) => {
           { name: 'Opportunities', path: '/student/opportunities', icon: <Briefcase size={20} /> },
           { name: 'My Applications', path: '/student/applications', icon: <FileText size={20} /> },
           { name: 'OJT Progress', path: '/student/progress', icon: <Activity size={20} /> },
+          { name: 'Progress Reports', path: '/student/progress-reports', icon: <ClipboardList size={20} /> },
         ];
       case 'recruiter':
         return [

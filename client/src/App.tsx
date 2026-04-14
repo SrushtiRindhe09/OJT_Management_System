@@ -13,6 +13,7 @@ import StudentProfile from './pages/student/Profile';
 import StudentOpportunities from './pages/student/Opportunities';
 import StudentApplications from './pages/student/Applications';
 import StudentProgress from './pages/student/Progress';
+import StudentProgressReports from './pages/student/ProgressReports';
 
 import RecruiterDashboard from './pages/recruiter/Dashboard';
 import RecruiterProfile from './pages/recruiter/Profile';
@@ -77,6 +78,7 @@ function App() {
                 <Route path="opportunities" element={<StudentOpportunities />} />
                 <Route path="applications" element={<StudentApplications />} />
                 <Route path="progress" element={<StudentProgress />} />
+                <Route path="progress-reports" element={<StudentProgressReports />} />
                 {/* Fallback for invalid student routes */}
                 <Route path="*" element={<Navigate to="dashboard" replace />} />
               </Routes>
